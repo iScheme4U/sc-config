@@ -33,6 +33,10 @@ Dependencies
 Changes
 -------------
 
+* Version 0.0.2
+
+    * Update readme to rst format
+
 * Version 0.0.1
 
     * Initial version
