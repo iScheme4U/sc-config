@@ -24,7 +24,7 @@ def get_version(rel_path):
     raise RuntimeError("Unable to find version string.")
 
 
-with open('README.md') as fd:
+with open('README.rst') as fd:
     readme = fd.read()
 
 setup(
