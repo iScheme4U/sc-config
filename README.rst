@@ -20,7 +20,9 @@ It is possible to install the tool with `pip`::
 Configuration
 -------------
 
-You can copy `default.yml <tests/sample_config/default.yml>`_ to `~/.<project-name>/production.yml`
+First, make sure /var/opt/sc directory exists, if not create this directory and make sure current user has the right
+to create files in this directory.
+You can copy `default.yml <tests/sample_config/default.yml>`_ to /var/opt/sc/.<project-name>/production.yml
 to initialize the production configuration.
 
 * See `default.yml <tests/sample_config/default.yml>`_ for more information.
@@ -28,10 +30,14 @@ to initialize the production configuration.
 Dependencies
 -------------
 
-* config42 0.4.4
+* `config42 <https://pypi.org/project/config42/>`_ >= 0.4.4
 
 Changes
 -------------
+
+* Version 0.0.3
+
+    * Change default config file location to '/var/opt/sc/'
 
 * Version 0.0.2
 

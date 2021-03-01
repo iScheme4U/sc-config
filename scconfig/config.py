@@ -14,7 +14,7 @@ class Config:
     @staticmethod
     def _get_config_file_path(project_name, environment):
         config_directory = '.{}'.format(project_name)
-        return os.path.join(os.path.expanduser('~'), '{}/{}.yml'.format(config_directory, environment))
+        return os.path.join('/var/opt/sc', '{}/{}.yml'.format(config_directory, environment))
 
     @staticmethod
     def create(*, project_name, environment=None, defaults={}):
