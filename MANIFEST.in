@@ -1,0 +1,3 @@
+include requirements.txt
+include CHANGES.rst
+recursive-include scconfig/tests/sample_config *
