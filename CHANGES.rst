@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v0.0.5 (20210511)
+-----------------
+
+    - Load configuration file from user directory and current directory
+
 v0.0.4 (20210304)
 -----------------
 

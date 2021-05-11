@@ -20,17 +20,11 @@ It is possible to install the tool with `pip`::
 Configuration
 -------------
 
-First, make sure /var/opt/sc directory exists, if not create this directory and make sure current user has the right
-to create files in this directory.
-
-You can copy `default.yml <https://github.com/Scott-Lau/sc-config/blob/master/scconfig/tests/sample_config/default.yml>`_
-to /var/opt/sc/.<project-name>/production.yml to initialize the production configuration.
-
-The default configuration file looks like this::
-
-    dev:
-      # whether this program is running is development mode
-      dev_mode: False
+Configuration files reading in this order, the first is the top most priority:
+1. production.xml in current directory,
+2. production.xml in <project_name> directory under User directory,
+3. production.xml in <project_name> directory under /var/opt/sc/ directory,
+4. default.xml in <project_name> directory under /var/opt/sc/ directory.
 
 Dependencies
 -------------

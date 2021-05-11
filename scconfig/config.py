@@ -34,9 +34,36 @@ from config42 import ConfigManager
 class Config:
 
     @staticmethod
+    def _get_cur_dir_config_file_path(environment):
+        """Top priority configuration file
+
+        :param environment:
+        :return:
+        """
+        filename = '{}.yml'.format(environment)
+        return os.path.join(os.getcwd(), filename)
+
+    @staticmethod
+    def _get_user_dir_config_file_path(project_name, environment):
+        """Second priority configuration file
+
+        :param environment:
+        :return:
+        """
+        config_directory = '{}'.format(project_name)
+        filename = '{}/{}.yml'.format(config_directory, environment)
+        return os.path.join(os.path.expanduser('~'), filename)
+
+    @staticmethod
     def _get_config_file_path(project_name, environment):
-        config_directory = '.{}'.format(project_name)
-        return os.path.join('/var/opt/sc', '{}/{}.yml'.format(config_directory, environment))
+        """Third priority configuration file
+
+        :param environment:
+        :return:
+        """
+        config_directory = '{}'.format(project_name)
+        filename = '{}/{}.yml'.format(config_directory, environment)
+        return os.path.join('/var/opt/sc', filename)
 
     @staticmethod
     def create(*, project_name, environment=None, defaults={}):
@@ -63,9 +90,22 @@ class Config:
         else:
             logging.getLogger(__name__).info("using environment: %s", environment)
         config.set(key_env, environment)
-        # load environment configurations from file
+
+        # load environment configurations from /var/opt/sc directory
         env_config_file = Config._get_config_file_path(project_name, environment)
         if os.path.exists(env_config_file):
             logging.getLogger(__name__).info("loading environmental configurations from %s", env_config_file)
             config.set_many(ConfigManager(path=env_config_file).as_dict())
+
+        # load environment configurations from user directory
+        user_config_file = Config._get_user_dir_config_file_path(project_name, environment)
+        if os.path.exists(user_config_file):
+            logging.getLogger(__name__).info("loading user directory configurations from %s", user_config_file)
+            config.set_many(ConfigManager(path=user_config_file).as_dict())
+
+        # load environment configurations from current directory
+        current_dir_config_file = Config._get_cur_dir_config_file_path(environment)
+        if os.path.exists(current_dir_config_file):
+            logging.getLogger(__name__).info("loading current directory configurations from %s", current_dir_config_file)
+            config.set_many(ConfigManager(path=current_dir_config_file).as_dict())
         return config
