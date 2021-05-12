@@ -34,7 +34,7 @@ from setuptools import setup, find_packages
 
 def read(rel_path):
     here = os.path.abspath(os.path.dirname(__file__))
-    with open(os.path.join(here, rel_path), 'r') as fp:
+    with open(os.path.join(here, rel_path), 'r', encoding="utf-8") as fp:
         return fp.read()
 
 
@@ -46,7 +46,7 @@ def get_version(rel_path):
     raise RuntimeError("Unable to find version string.")
 
 
-with open('README.rst') as fd:
+with open('README.rst', encoding="utf-8") as fd:
     readme = fd.read()
 
 setup(
