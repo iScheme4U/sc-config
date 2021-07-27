@@ -64,3 +64,11 @@ target/
 
 # IDEA settings files
 .idea/
+
+# other project specific ignore files
+test_data/
+production.yml
+sc-sys.log.*
+*.csv
+*.xlsx
+*.zip
