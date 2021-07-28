@@ -66,16 +66,18 @@ class Config:
         return os.path.join('/var/opt/sc', filename)
 
     @staticmethod
-    def create(*, project_name, environment=None, defaults={}):
-        prefix = project_name.upper()
-        prefix = prefix.replace("-", "_")
+    def create(*, project_name, encoding='utf-8', environment=None, defaults=None):
+        if defaults is None:
+            defaults = {}
+        # fix prefix to be SC
+        prefix = "SC"
         # load defaults from defaults.py file
-        config = ConfigManager(defaults=defaults)
+        config = ConfigManager(defaults=defaults, encoding=encoding)
         # load defaults from home directory
         config_file = Config._get_config_file_path(project_name, "default")
         if os.path.exists(config_file):
             logging.getLogger(__name__).info("loading default configurations from %s", config_file)
-            config.set_many(ConfigManager(path=config_file).as_dict())
+            config.set_many(ConfigManager(path=config_file, encoding=encoding).as_dict())
         # load environment configurations from environment variables
         env_config = ConfigManager(prefix=prefix)
         config.set_many(env_config.as_dict())
@@ -95,17 +97,17 @@ class Config:
         env_config_file = Config._get_config_file_path(project_name, environment)
         if os.path.exists(env_config_file):
             logging.getLogger(__name__).info("loading environmental configurations from %s", env_config_file)
-            config.set_many(ConfigManager(path=env_config_file).as_dict())
+            config.set_many(ConfigManager(path=env_config_file, encoding=encoding).as_dict())
 
         # load environment configurations from user directory
         user_config_file = Config._get_user_dir_config_file_path(project_name, environment)
         if os.path.exists(user_config_file):
             logging.getLogger(__name__).info("loading user directory configurations from %s", user_config_file)
-            config.set_many(ConfigManager(path=user_config_file).as_dict())
+            config.set_many(ConfigManager(path=user_config_file, encoding=encoding).as_dict())
 
         # load environment configurations from current directory
         current_dir_config_file = Config._get_cur_dir_config_file_path(environment)
         if os.path.exists(current_dir_config_file):
             logging.getLogger(__name__).info("loading current directory configurations from %s", current_dir_config_file)
-            config.set_many(ConfigManager(path=current_dir_config_file).as_dict())
+            config.set_many(ConfigManager(path=current_dir_config_file, encoding=encoding).as_dict())
         return config

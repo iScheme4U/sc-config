@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v0.0.7 (20210728)
+-----------------
+
+    - Using utf-8 as the default file encoding
+
 v0.0.6 (20210512)
 -----------------
 
