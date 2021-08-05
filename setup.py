@@ -79,7 +79,7 @@ setup(
         'config42>=0.4.5',
     ],
     package_data={
-        'sc_config': ['tests/sample_config/default.yml'],
+        'sc_config': ['tests/*'],
     },
     include_package_data=True,
 )

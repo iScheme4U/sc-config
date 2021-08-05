@@ -6,6 +6,7 @@ v0.0.8 (20210805)
 
     - update dependencies
     - rename package
+    - include resources
 
 v0.0.7 (20210728)
 ----------------------
