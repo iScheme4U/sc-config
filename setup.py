@@ -76,7 +76,7 @@ setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'config42>=0.4.4',
+        'config42>=0.4.5',
     ],
     package_data={
         'scconfig': ['tests/sample_config/default.yml'],
