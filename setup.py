@@ -51,7 +51,7 @@ with open('README.rst', encoding="utf-8") as fd:
 
 setup(
     name='sc-config',
-    version=get_version("scconfig/__init__.py"),
+    version=get_version("sc_config/__init__.py"),
     url='https://github.com/Scott-Lau/sc-config',
     packages=find_packages(),
     author='Scott Lau',
@@ -79,7 +79,7 @@ setup(
         'config42>=0.4.5',
     ],
     package_data={
-        'scconfig': ['tests/sample_config/default.yml'],
+        'sc_config': ['tests/sample_config/default.yml'],
     },
     include_package_data=True,
 )

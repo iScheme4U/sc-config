@@ -29,7 +29,7 @@ Configuration files reading in this order, the first is the top most priority:
 Dependencies
 -------------
 
-* `config42 <https://pypi.org/project/config42/>`_ >= 0.4.4
+* `config42 <https://pypi.org/project/config42/>`_ >= 0.4.5
 
 License
 -------------

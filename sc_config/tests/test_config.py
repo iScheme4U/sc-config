@@ -25,7 +25,7 @@ import unittest
 
 from scutils.log_utils import log_init
 
-from scconfig.config import Config
+from sc_config.config import Config
 
 
 class ConfigTestCase(unittest.TestCase):
