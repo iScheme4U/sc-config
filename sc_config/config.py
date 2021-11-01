@@ -69,18 +69,17 @@ class Config:
     def create(*, project_name, encoding='utf-8', environment=None, defaults=None):
         if defaults is None:
             defaults = {}
-        # fix prefix to be SC
-        prefix = "SC"
-        # load defaults from defaults.py file
-        config = ConfigManager(defaults=defaults, encoding=encoding)
         # load defaults from home directory
         config_file = Config._get_config_file_path(project_name, "default")
+        found_config_file = False
         if os.path.exists(config_file):
             logging.getLogger(__name__).info("loading default configurations from %s", config_file)
-            config.set_many(ConfigManager(path=config_file, encoding=encoding).as_dict())
+            config = ConfigManager(path=config_file, encoding=encoding, defaults=defaults)
+            found_config_file = True
         # load environment configurations from environment variables
+        # fix prefix to be SC
+        prefix = "SC"
         env_config = ConfigManager(prefix=prefix)
-        config.set_many(env_config.as_dict())
 
         key_env = "environment"
         if environment is None:
@@ -91,23 +90,40 @@ class Config:
                 logging.getLogger(__name__).info("did not specify environment, using %s", environment)
         else:
             logging.getLogger(__name__).info("using environment: %s", environment)
-        config.set(key_env, environment)
 
         # load environment configurations from /var/opt/sc directory
         env_config_file = Config._get_config_file_path(project_name, environment)
         if os.path.exists(env_config_file):
             logging.getLogger(__name__).info("loading environmental configurations from %s", env_config_file)
-            config.set_many(ConfigManager(path=env_config_file, encoding=encoding).as_dict())
+            if not found_config_file:
+                config = ConfigManager(path=env_config_file, encoding=encoding, defaults=defaults)
+                found_config_file = True
+            else:
+                config.set_many(ConfigManager(path=env_config_file, encoding=encoding).as_dict())
 
         # load environment configurations from user directory
         user_config_file = Config._get_user_dir_config_file_path(project_name, environment)
         if os.path.exists(user_config_file):
             logging.getLogger(__name__).info("loading user directory configurations from %s", user_config_file)
-            config.set_many(ConfigManager(path=user_config_file, encoding=encoding).as_dict())
+            if not found_config_file:
+                config = ConfigManager(path=user_config_file, encoding=encoding, defaults=defaults)
+                found_config_file = True
+            else:
+                config.set_many(ConfigManager(path=user_config_file, encoding=encoding).as_dict())
 
         # load environment configurations from current directory
         current_dir_config_file = Config._get_cur_dir_config_file_path(environment)
         if os.path.exists(current_dir_config_file):
             logging.getLogger(__name__).info("loading current directory configurations from %s", current_dir_config_file)
-            config.set_many(ConfigManager(path=current_dir_config_file, encoding=encoding).as_dict())
+            logging.getLogger(__name__).info(f"found_config_file: {found_config_file}")
+            if not found_config_file:
+                config = ConfigManager(path=current_dir_config_file, encoding=encoding, defaults=defaults)
+                found_config_file = True
+            else:
+                config.set_many(ConfigManager(path=current_dir_config_file, encoding=encoding).as_dict())
+        
+        if not found_config_file:
+            config = ConfigManager(defaults=defaults)
+        config.set_many(env_config.as_dict())
+        config.set(key_env, environment)
         return config

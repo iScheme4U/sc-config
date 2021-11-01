@@ -20,12 +20,11 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-import logging
 import unittest
 
-from scutils.log_utils import log_init
+from sc_utilities import log_init
 
-from sc_config.config import Config
+from sc_config import ConfigUtils
 
 
 class ConfigTestCase(unittest.TestCase):
@@ -36,15 +35,16 @@ class ConfigTestCase(unittest.TestCase):
         log_init()
 
     def test_create_config(self):
-        config = Config.create(project_name="sc-config")
+        config = ConfigUtils.get_config(project_name="sc-config")
         self.assertIsNotNone(config)
         environment = config.get("environment")
 
         self.assertEqual(environment, 'production')
+        config.set('environment', 'development')
 
-        target_filename = config.get("diff.target_filename")
-        logging.getLogger(__name__).info("target_filename: %s", target_filename)
-        self.assertEqual("考核指标差异分析.xlsx", target_filename)
+        self.assertEqual(config.get("environment"), 'development')
+
+        config.commit()
 
 
 if __name__ == '__main__':

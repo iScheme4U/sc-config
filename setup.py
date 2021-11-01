@@ -76,7 +76,7 @@ setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'config42>=0.4.5',
+        'config42>=0.4.6',
     ],
     package_data={
         'sc_config': ['tests/*'],

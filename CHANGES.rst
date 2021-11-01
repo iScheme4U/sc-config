@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v0.0.10 (20211101)
+----------------------
+
+- Update dependency, config42 library using a new yaml handler
+
 v0.0.9 (20211029)
 ----------------------
 

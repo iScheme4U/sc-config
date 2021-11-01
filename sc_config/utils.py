@@ -22,10 +22,10 @@
 
 import logging
 
-from sc_config.config import Config
-from sc_config.default import DEFAULT_CONFIG
-
 from sc_utilities import Singleton
+
+from sc_config.config import Config
+
 
 class ConfigUtils(metaclass=Singleton):
     """
@@ -63,7 +63,7 @@ class ConfigUtils(metaclass=Singleton):
         try:
             # load configurations
             cls._config[project_name] = {}
-            config = Config.create(project_name=project_name, defaults=DEFAULT_CONFIG)
+            config = Config.create(project_name=project_name)
             cls._config[project_name] = config
         except Exception as error:
             cls._config[project_name] = {}
