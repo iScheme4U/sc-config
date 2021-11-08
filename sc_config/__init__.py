@@ -25,7 +25,7 @@ Copyright (c) 2021 Scott Lau
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-__version__ = "0.0.10"
+__version__ = "0.0.11"
 
 from .config import Config
 from .utils import ConfigUtils

@@ -43,8 +43,8 @@ class ConfigUtils(metaclass=Singleton):
         清除指定工程的配置信息
         :return:
         """
-        if (project_name in cls._config.keys()):
-            cls._config[project_name] = {}
+        if project_name in cls._config.keys():
+            cls._config.pop(project_name)
 
     @classmethod
     def clear_all(cls):
