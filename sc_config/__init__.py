@@ -25,7 +25,7 @@ Copyright (c) 2021 Scott Lau
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-__version__ = "0.0.13"
+__version__ = "0.0.14"
 
 from sc_config.config import Config
 from sc_config.config_utils import ConfigUtils
