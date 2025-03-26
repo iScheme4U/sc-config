@@ -32,7 +32,7 @@ Dependencies
 * Pyyaml >= 5.1
 * Jinja2 >= 2.0
 * Cerberus >= 1.3.1
-* MarkupSafe>=3.0.2
+* MarkupSafe>=2.0.1
 
 License
 -------------
