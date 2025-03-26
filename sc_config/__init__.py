@@ -25,12 +25,14 @@ Copyright (c) 2021 Scott Lau
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #  SOFTWARE.
 
-__version__ = "0.0.11"
+__version__ = "0.0.12"
 
-from .config import Config
-from .utils import ConfigUtils
+from sc_config.config import Config
+from sc_config.config_utils import ConfigUtils
+from sc_config.config_manager import ConfigManager
 
 __all__ = [
     "Config",
     "ConfigUtils",
+    "ConfigManager",
 ]

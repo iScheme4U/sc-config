@@ -76,7 +76,10 @@ setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'config42>=0.4.6',
+        'Pyyaml>=5.1',
+        'Jinja2>=2.0',
+        'Cerberus>=1.3.1',
+        'MarkupSafe>=3.0.2',
     ],
     package_data={
         'sc_config': ['tests/*'],

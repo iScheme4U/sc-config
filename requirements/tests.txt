@@ -1,0 +1,3 @@
+pytest
+pytest-cov
+sc-utilities>=0.0.7

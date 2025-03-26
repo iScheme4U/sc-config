@@ -28,7 +28,7 @@ Copyright (c) 2021 Scott Lau
 import logging
 import os
 
-from config42 import ConfigManager
+from sc_config.config_manager import ConfigManager
 
 
 class Config:
@@ -114,14 +114,15 @@ class Config:
         # load environment configurations from current directory
         current_dir_config_file = Config._get_cur_dir_config_file_path(environment)
         if os.path.exists(current_dir_config_file):
-            logging.getLogger(__name__).info("loading current directory configurations from %s", current_dir_config_file)
+            logging.getLogger(__name__).info("loading current directory configurations from %s",
+                                             current_dir_config_file)
             logging.getLogger(__name__).info(f"found_config_file: {found_config_file}")
             if not found_config_file:
                 config = ConfigManager(path=current_dir_config_file, encoding=encoding, defaults=defaults)
                 found_config_file = True
             else:
                 config.set_many(ConfigManager(path=current_dir_config_file, encoding=encoding).as_dict())
-        
+
         if not found_config_file:
             config = ConfigManager(defaults=defaults)
         config.set_many(env_config.as_dict())

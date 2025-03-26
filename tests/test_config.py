@@ -24,15 +24,10 @@ import unittest
 
 from sc_utilities import log_init
 
-from sc_config import ConfigUtils
+from sc_config.config_utils import ConfigUtils
 
 
 class ConfigTestCase(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(cls) -> None:
-        super().setUpClass()
-        log_init()
 
     def test_create_config(self):
         config = ConfigUtils.get_config(project_name="sc-config")
@@ -48,4 +43,5 @@ class ConfigTestCase(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    log_init()
     unittest.main()

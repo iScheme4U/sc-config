@@ -1,80 +1,50 @@
-#  The MIT License (MIT)
-#
-#  Copyright (c) 2021. Scott Lau
-#
-#  Permission is hereby granted, free of charge, to any person obtaining a copy
-#  of this software and associated documentation files (the "Software"), to deal
-#  in the Software without restriction, including without limitation the rights
-#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-#  copies of the Software, and to permit persons to whom the Software is
-#  furnished to do so, subject to the following conditions:
-#
-#  The above copyright notice and this permission notice shall be included in all
-#  copies or substantial portions of the Software.
-#
-#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-#  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-#  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-#  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-#  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-#  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-#  SOFTWARE.
-
-import logging
-
-from sc_utilities import Singleton
-
-from sc_config.config import Config
+builtin_types = {'string': str,
+                 'integer': int,
+                 'float': float,
+                 'boolean': bool,
+                 'dict': dict,
+                 'list': list,
+                 'set': set
+                 }
 
 
-class ConfigUtils(metaclass=Singleton):
-    """
-    配置文件相关工具类
-    """
+def recursive(key, obj, value=None, update=False):
+    _keys = key.split('.')
+    assert len(_keys) > 0
 
-    _config: dict = {}
+    if isinstance(obj, list):
+        _base = int(_keys[0])
+    else:
+        _base = _keys[0]
 
-    def __init__(self):
-        pass
+    if isinstance(obj, dict) and _base not in obj and not update:
+        return None
+    if isinstance(obj, list) and _base >= len(obj) and not update:
+        return None
+    elif isinstance(obj, list) and update:
+        raise AttributeError("Insertion in list is not allowed")
 
-    @classmethod
-    def clear(cls, project_name):
-        """
-        清除指定工程的配置信息
-        :return:
-        """
-        if project_name in cls._config.keys():
-            cls._config.pop(project_name)
+    if isinstance(obj, str) and _base and not update:
+        raise AttributeError("Cannot get {}' key from string.".format(_base))
 
-    @classmethod
-    def clear_all(cls):
-        """
-        清除所有配置信息
-        :return:
-        """
-        cls._config.clear()
+    if len(_keys) == 1:
+        if update:
+            obj[_base] = value
+        return obj[_base]
+    else:
+        if isinstance(obj, dict) and _base not in obj:
+            obj[_base] = dict()
 
-    @classmethod
-    def load_configurations(cls, project_name):
-        """
-        加载配置文件
-        :return:
-        """
-        try:
-            # load configurations
-            cls._config[project_name] = {}
-            config = Config.create(project_name=project_name)
-            cls._config[project_name] = config
-        except Exception as error:
-            cls._config[project_name] = {}
-            logging.getLogger(__name__).exception(f"failed to read {project_name} configuration", exc_info=error)
+        return recursive('.'.join(_keys[1:]), obj[_base], value, update)
 
-    @classmethod
-    def get_config(cls, project_name):
-        """
-        获取配置信息
-        :return: 配置信息字典
-        """
-        if len(cls._config) == 0 or project_name not in cls._config.keys():
-            cls.load_configurations(project_name)
-        return cls._config[project_name]
+
+def flatten(dict_, parent_key='', separator='/'):
+    if isinstance(dict_, dict):
+        rst = {}
+        for key, value in dict_.items():
+            rst.update(flatten(value, "{}{}{}".format(parent_key, separator, key), separator))
+        return rst
+    elif isinstance(dict_, list):
+        return flatten({k: v for k, v in enumerate(dict_)}, parent_key, separator)
+    else:
+        return {parent_key: dict_}

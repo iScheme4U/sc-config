@@ -7,7 +7,7 @@
 A simple Python configuration file operator
 ===========================================
 
-This project provides a common way to read configurations using `config42 <https://pypi.org/project/config42/>`_.
+This project provides a common way to read configurations.
 
 
 Installation
@@ -29,7 +29,10 @@ Configuration files reading in this order, the first is the top most priority:
 Dependencies
 -------------
 
-* `config42 <https://pypi.org/project/config42/>`_ >= 0.4.5
+* Pyyaml >= 5.1
+* Jinja2 >= 2.0
+* Cerberus >= 1.3.1
+* MarkupSafe>=3.0.2
 
 License
 -------------
