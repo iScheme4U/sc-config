@@ -76,7 +76,7 @@ setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'Pyyaml>=5.1',
+        'ruamel.yaml>=0.17.17',
         'Jinja2>=2.0',
         'Cerberus>=1.3.1',
         'MarkupSafe>=2.0.1',
